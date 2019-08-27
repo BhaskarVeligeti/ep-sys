@@ -1,0 +1,186 @@
+ mutation login($input:InputLoginType!) {
+    login(input:$input) {
+      id
+      username
+      role
+    }
+  }
+Input:
+{
+"input": {
+  "username": "0611175105",
+  "password": "@@Oracle12"
+}
+}
+
+==========================================================================================================================================================================
+mutation addList($input:InputListType!){
+  addList(input:$input){
+    id name type
+  }
+}
+Input:
+{
+  "input": {
+    "name": "Administrator",
+    "type": "Role"
+  }
+}
+
+Output:
+{
+  "data": {
+    "addList": {
+      "id": "5c686ee293b4af421848aa26",
+      "name": "Administrator",
+      "type": "Role"
+    }
+  }
+}
+==========================================================================================================================================================================
+
+mutation addAdmin($firstName:String!,$surname:String!,$username: String!,$password: String!,$email: String,$role:String!){
+  addAdmin(firstName:$firstName,surname:$surname,username:$username,password:$password,email:$email,role:$role){
+   id firstName surname  username email role status
+  }
+}
+
+Input:
+{
+  "firstName": "Bhaskar",
+  "surname": "Veligeti",
+  "username": "123",
+  "password": "123",
+  "email": "bhaskarv20@gmail.com",
+  "role": "Administrator"
+}
+
+==========================================================================================================================================================================
+mutation createUser($input:InputCreateUserType!){
+  createUser(input:$input){
+    id firstName surname  username email role createdBy
+  }
+}
+
+Input:
+{
+  "input": {
+    "firstName": "Rep",
+    "surname": "001",
+    "username": "1111111111",
+    "password": "123456",
+    "email": "Rep001@me.com",
+    "firmName": "",
+    "role": "Representative",
+    "createdBy": "0611175105"
+  }
+}
+}
+
+==========================================================================================================================================================================
+mutation updateRep($input:InputUpdateRepType!){
+  updateRep(input:$input){
+    id firstName surname  username email role status createdBy
+  }
+}
+
+
+{
+"input": {
+  "id": "5d5f1676b934df4e88f8a69b",
+    "firstName": "Updated",
+    "surname": "Updated123",
+    "email": "Rep001@me.com",
+    "status": "Inactive"
+  }
+}
+
+==========================================================================================================================================================================
+
+==========================================================================================================================================================================
+
+
+
+==========================================================================================================================================================================
+mutation createUser($input:InputCreateUserType!){
+  createUser(input:$input){
+    id firstName username role createdBy
+  }
+}
+
+{
+   "input": {
+    "firstName": "",
+    "surname": "",
+    "username": "2222222222",
+    "password": "123456",
+    "email": "",
+    "firmName": "Customer 001",
+    "role": "Customer",
+    "createdBy": "1111111111"
+  }
+}
+
+=================================================addOrderDetails==============================================================================================================
+
+mutation addOrderDetails($input:[InputOrderDetailsType!]){
+  addOrderDetails(input:$input){
+    id productId product quantity price createdAt
+  }
+}
+
+Input:
+
+{
+  "input": [
+    {
+      "id": "5c766db293d7c6ab0837b19c",
+      "quantity": 10,
+      "price": 1000
+    },
+    {
+      "id": "5c76a5cd93d7c6ab0837b1a0",
+      "quantity": 10,
+      "price": 1000
+    },
+    {
+      "id": "5c76d7a293d7c6ab0837b1a1",
+      "quantity": 10,
+      "price": 1000
+    }
+  ]
+}
+
+Output:
+{
+  "data": {
+    "addOrderDetails": [
+      {
+        "id": "5c7a584756990e1af916acd4",
+        "productId": "5c766db293d7c6ab0837b19c",
+        "product": "Product1 fsdfdsfdsfdsfdsf",
+        "quantity": 10,
+        "price": 1000,
+        "createdAt": "1551521863276"
+      },
+      {
+        "id": "5c7a584756990e1af916acd5",
+        "productId": "5c76a5cd93d7c6ab0837b1a0",
+        "product": "Product2",
+        "quantity": 10,
+        "price": 1000,
+        "createdAt": "1551521863279"
+      },
+      {
+        "id": "5c7a584756990e1af916acd6",
+        "productId": "5c76d7a293d7c6ab0837b1a1",
+        "product": "Product3",
+        "quantity": 10,
+        "price": 1000,
+        "createdAt": "1551521863279"
+      }
+    ]
+  }
+}
+
+=================================================addOrders==============================================================================================================
