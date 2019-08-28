@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import Spacer from './Spacer'
 import { MaterialIcons } from '@expo/vector-icons';
-import { TextInput } from '../formcontrols/TextInput'
+import { DynamicTextInput } from '../formcontrols/DynamicTextInput'
 import { NavigationEvents } from 'react-navigation'
 import { Context as RegContext } from '../context/RegContext' // accesing Context
 import RadioButton from '../components/RadioButton'
@@ -56,7 +56,7 @@ const RepUpdateForm = ({ navigation, data }) => {
             <NavigationEvents onDidFocus={clearErrorMessage} />
             <Loader loading={loading} />
             {renderError()}
-            <TextInput
+            <DynamicTextInput
                 label='Firstname :'
                 secureTextEntry={false}
                 autoCapitalize='none'
@@ -65,7 +65,7 @@ const RepUpdateForm = ({ navigation, data }) => {
                 value={firstName}
                 onChangeText={setFirstName} />
             <Spacer />
-            <TextInput
+            <DynamicTextInput
                 label='Surname :'
                 secureTextEntry={false}
                 autoCapitalize='none'
@@ -74,7 +74,7 @@ const RepUpdateForm = ({ navigation, data }) => {
                 value={surname}
                 onChangeText={setSurName} />
             <Spacer />
-            <TextInput
+            <DynamicTextInput
                 label='Email :'
                 secureTextEntry={false}
                 autoCapitalize='none'

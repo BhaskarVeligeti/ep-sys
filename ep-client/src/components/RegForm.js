@@ -4,7 +4,7 @@ import { View, StyleSheet, Dimensions } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import Spacer from './Spacer'
 import { AntDesign } from '@expo/vector-icons';
-import { TextInput } from '../formcontrols/TextInput'
+import { DynamicTextInput } from '../formcontrols/DynamicTextInput'
 import { NavigationEvents } from 'react-navigation'
 import { Context as AuthContext } from '../context/AuthContext';
 import { Context as RegContext } from '../context/RegContext' // accesing Context
@@ -61,7 +61,7 @@ const RegForm = ({ navigation }) => {
  <NavigationEvents onDidFocus={clearErrorMessage}  />
             <Loader loading={loading} />
             {renderError()}
-            <TextInput
+            <DynamicTextInput
                 label='Firstname :'
                 secureTextEntry={false}
                 autoCapitalize='none'
@@ -70,7 +70,7 @@ const RegForm = ({ navigation }) => {
                 value={firstName}
                 onChangeText={setFirstName} />
             <Spacer />
-            <TextInput
+            <DynamicTextInput
                 label='Surname :'
                 secureTextEntry={false}
                 autoCapitalize='none'
@@ -79,7 +79,7 @@ const RegForm = ({ navigation }) => {
                 value={surname}
                 onChangeText={setSurName} />
             <Spacer />
-            <TextInput
+            <DynamicTextInput
                 label='Username :'
                 secureTextEntry={false}
                 autoCapitalize='none'
@@ -88,7 +88,7 @@ const RegForm = ({ navigation }) => {
                 value={username}
                 onChangeText={setUsername} />
             <Spacer />
-            <TextInput
+            <DynamicTextInput
                 label='Password :'
                 secureTextEntry={true}
                 autoCapitalize='none'
@@ -97,7 +97,7 @@ const RegForm = ({ navigation }) => {
                 value={password}
                 onChangeText={setPassword} />
             <Spacer />
-            <TextInput
+            <DynamicTextInput
                 label='Email :'
                 secureTextEntry={false}
                 autoCapitalize='none'

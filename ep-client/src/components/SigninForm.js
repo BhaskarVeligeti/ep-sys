@@ -4,7 +4,7 @@ import { View,StyleSheet,Dimensions } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import Spacer from './Spacer'
 import { AntDesign } from '@expo/vector-icons';
-import { TextInput } from '../formcontrols/TextInput'
+import { DynamicTextInput } from '../formcontrols/DynamicTextInput'
 import {NavigationEvents} from 'react-navigation'
 import { Context as AuthContext } from '../context/AuthContext' // accesing Context
 
@@ -44,27 +44,30 @@ const SigninForm = ({headerText}) => {
             <Text h4 h4Style={headerStyle}>{headerText}</Text>
             <Loader loading={loading} />
             { renderError() }
-            <Spacer />
-            <TextInput
-                label='Username :'
+   
+            <DynamicTextInput
+                label='Username'
                 secureTextEntry={false}
                 autoCapitalize='none'
                 autoCorrect={true}
                 placeholder='mobile no'
                 value={username}
-                onChangeText={onUsernameChange} />
-                <Spacer />
-            <TextInput
-                label='Password :'
+                onChangeText={onUsernameChange}
+                error='Invalid username' />
+       
+            <DynamicTextInput
+                label='Password'
                 secureTextEntry={true}
                 autoCapitalize='none'
                 autoCorrect={false}
                 placeholder='password'
                 value={password}
-                onChangeText={onPasswordChange} />
+                onChangeText={onPasswordChange} 
+                error='Invalid password'
+                />
             <Spacer />
             {renderButton()}
-            <Spacer />
+         
         </>)
 };
 

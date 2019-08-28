@@ -65,7 +65,19 @@ const LandingFlow = createStackNavigator(
   {
     Welcome: WelcomeScreen,
     Auth:AuthFlow
-  },
+  },  { // options object 
+    initialRouteName: "Welcome",
+    /* The header config Sharing common navigationOptions across screens */
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#6f42c1',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
+  }
 )
 
 // ******************************************** home screens flow : *****************************************************

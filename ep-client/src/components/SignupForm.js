@@ -3,7 +3,7 @@ import { View, StyleSheet, Dimensions, Picker } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import Spacer from './Spacer'
 import { FontAwesome } from '@expo/vector-icons';
-import { TextInput } from '../formcontrols/TextInput'
+import { DynamicTextInput } from '../formcontrols/DynamicTextInput'
 import { NavigationEvents } from 'react-navigation'
 import { Context as AuthContext } from '../context/AuthContext' // accesing Context
 import { Context as UsersContext } from '../context/UsersContext';
@@ -49,33 +49,33 @@ const { headerStyle, errorStyle, iconStyle,repStyle,pickerStyle } = styles
             <Loader loading={loading} />
             {renderError()}
             <Spacer />
-            <TextInput
-                label='Business Name :'
+            <DynamicTextInput
+                label='Business Name'
                 secureTextEntry={false}
                 autoCapitalize='none'
                 autoCorrect={true}
                 placeholder='firmName'
                 value={firmName}
                 onChangeText={onFirmnameChange} />
-            <Spacer />
-            <TextInput
-                label='Username :'
+         
+            <DynamicTextInput
+                label='Username'
                 secureTextEntry={false}
                 autoCapitalize='none'
                 autoCorrect={true}
                 placeholder='username'
                 value={username}
                 onChangeText={onUsernameChange} />
-            <Spacer />
-            <TextInput
-                label='Password :'
+         
+            <DynamicTextInput
+                label='Password'
                 secureTextEntry={true}
                 autoCapitalize='none'
                 autoCorrect={false}
                 placeholder='password'
                 value={password}
                 onChangeText={onPasswordChange} />
-            <Spacer />
+        
             <Text style={repStyle}>{'Representative :'}</Text>
 
             <Picker
