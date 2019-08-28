@@ -1,29 +1,34 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { TextInput, HelperText } from 'react-native-paper';
+import { View, Text, StyleSheet } from 'react-native';
+import { TextInput, HelperText,withTheme } from 'react-native-paper';
 
 
 
-const DynamicTextInput = ({ label, autoCapitalize, autoCorrect, value, onChangeText, placeholder, secureTextEntry,error }) => {
+const DynamicTextInput = ({theme,label, autoFocus,autoCapitalize, autoCorrect, value, onChangeText, placeholder, secureTextEntry, maxLength,error }) => {
 
   const { inputStyle, labelStyle, containerStyle } = styles;
+  // const {colors}=theme
+
+  // console.log('validator :',error)
   return (
     <View>
       <TextInput
+
         mode='outlined'
         label={label}
+        autoFocus={autoFocus}
+        maxLength = {maxLength}
         secureTextEntry={secureTextEntry}
         autoCapitalize={autoCapitalize}
         autoCorrect={autoCorrect}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText} />
-      <HelperText
-        type="error"
-        visible={!value.includes('@')}
-      >
-     {error}
-        </HelperText>
+      <HelperText type="error"  >
+        <Text>
+          {error}
+        </Text>
+      </HelperText>
 
     </View>
   )
@@ -54,5 +59,5 @@ const styles = StyleSheet.create({
   }
 })
 
-
-export { DynamicTextInput }
+// export default withTheme(DynamicTextInput);
+export default  DynamicTextInput;

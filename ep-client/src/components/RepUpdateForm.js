@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import Spacer from './Spacer'
 import { MaterialIcons } from '@expo/vector-icons';
-import { DynamicTextInput } from '../formcontrols/DynamicTextInput'
+import DynamicTextInput from '../formcontrols/DynamicTextInput'
 import { NavigationEvents } from 'react-navigation'
 import { Context as RegContext } from '../context/RegContext' // accesing Context
 import RadioButton from '../components/RadioButton'

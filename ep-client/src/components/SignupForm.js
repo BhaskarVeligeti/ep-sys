@@ -3,7 +3,7 @@ import { View, StyleSheet, Dimensions, Picker } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import Spacer from './Spacer'
 import { FontAwesome } from '@expo/vector-icons';
-import { DynamicTextInput } from '../formcontrols/DynamicTextInput'
+import DynamicTextInput from '../formcontrols/DynamicTextInput'
 import { NavigationEvents } from 'react-navigation'
 import { Context as AuthContext } from '../context/AuthContext' // accesing Context
 import { Context as UsersContext } from '../context/UsersContext';

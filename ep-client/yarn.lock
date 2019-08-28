@@ -5012,6 +5012,11 @@ simple-plist@^1.0.0:
     bplist-parser "0.1.1"
     plist "^3.0.1"
 
+simple-react-validator@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/simple-react-validator/-/simple-react-validator-1.2.2.tgz#b9208238759303f7f70988f1a3fe8feeb75c7f5e"
+  integrity sha512-ENnWwQ5jBjuqpSIsdqb30gzPPpA23KZxq+RwsYEf7Q/cU0Kb4wwtWBOO7/8obEihkgyEaHrdfndTpfZ0LHVjyg==
+
 simple-swizzle@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/simple-swizzle/-/simple-swizzle-0.2.2.tgz#a4da6b635ffcccca33f70d17cb92592de95e557a"
