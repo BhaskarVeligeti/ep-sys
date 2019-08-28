@@ -39,8 +39,6 @@ router.post('/signin', async (req, res) => {
     }
     // const user = await authUser(username); // TO DO :fix this
     const user = await User_Model.findOne({ username });
-    const roleData = await List_Model.findOne({ _id: user.role });
-    const role = roleData.name
     // console.log('authUser:',user);
 
     if (!user) {
@@ -48,13 +46,15 @@ router.post('/signin', async (req, res) => {
     }
     // password comparison
     try {
+        const roleData = await List_Model.findOne({ _id: user.role });
+        const role = roleData.name
         await user.comparePassword(password);
         // generate jwt send back to user
         const token = jwt.sign({ userId: user._id }, 'MY_SECRET_KEY');
         res.send({ authUser: { token, username, role } });
 
     } catch (err) {
-        return res.status(422).send({ error: '123 Invalid username or password' })
+        return res.status(422).send({ error: 'Invalid username or password' })
     }
 
 

@@ -1,0 +1,27 @@
+{
+  "name": "ep-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db": "mongo < scripts/DB.js",
+    "start": "nodemon ./src/index.js --offline"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^3.0.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "express-session": "^1.16.2",
+    "graphql": "^14.4.2",
+    "graphql-date": "^1.0.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.9",
+    "nodemon": "^1.19.1"
+  }
+}

@@ -1,16 +1,19 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import Loader from './Loader';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import Spacer from './Spacer'
 import { AntDesign } from '@expo/vector-icons';
-import { DynamicTextInput } from '../formcontrols/DynamicTextInput'
+import DynamicTextInput from '../formcontrols/DynamicTextInput'
 import { NavigationEvents } from 'react-navigation'
 import { Context as AuthContext } from '../context/AuthContext';
 import { Context as RegContext } from '../context/RegContext' // accesing Context
+import SimpleReactValidator from 'simple-react-validator';
 
 
 const RegForm = ({ navigation }) => {
+    const validator = new SimpleReactValidator({ locale: 'en' });
+
     const [firstName, setFirstName] = useState('');
     const [surname, setSurName] = useState('');
     const [username, setUsername] = useState('');
@@ -29,6 +32,7 @@ const RegForm = ({ navigation }) => {
     const { headerStyle, errorStyle, iconStyle } = styles
 
     renderError = () => (errorMessage && !loading) ? (<Text h4 h4Style={errorStyle}>{errorMessage}</Text>) : null
+    buttonDisable = () => (!validator.allValid() && !loading) ? true : false
 
     var input = {
         firstName,
@@ -36,11 +40,9 @@ const RegForm = ({ navigation }) => {
         username,
         password,
         email,
-        role:'Representative',
-        createdBy:authUser.username
+        role: 'Representative',
+        createdBy: authUser.username
     }
-
-    // useEffect(() => { clearErrorMessage() }, [])
 
     renderButton = () => {
         return (
@@ -50,7 +52,7 @@ const RegForm = ({ navigation }) => {
                 title={'Add '}
                 onPress={() => createRep({ input })}
                 raised
-                disabled={loading}
+                disabled={buttonDisable()}
                 buttonStyle={{ borderRadius: 5 }} />
         )
     }
@@ -58,57 +60,76 @@ const RegForm = ({ navigation }) => {
 
     return (
         <>
- <NavigationEvents onDidFocus={clearErrorMessage}  />
             <Loader loading={loading} />
+            <NavigationEvents onDidFocus={clearErrorMessage} />
             {renderError()}
             <DynamicTextInput
-                label='Firstname :'
+                label='Firstname'
+                maxLength={30}
                 secureTextEntry={false}
                 autoCapitalize='none'
-                autoCorrect={true}
-                placeholder='firstname'
+                autoCorrect={false}
+                placeholder='firstName'
                 value={firstName}
-                onChangeText={setFirstName} />
-            <Spacer />
+                onChangeText={setFirstName}
+                onBlur={validator.showMessageFor('firstName')}
+                error={validator.message('firstName', firstName, 'required|max:30')}
+            />
             <DynamicTextInput
-                label='Surname :'
+                label='Surname'
+                maxLength={30}
                 secureTextEntry={false}
                 autoCapitalize='none'
-                autoCorrect={true}
+                autoCorrect={false}
                 placeholder='surname'
                 value={surname}
-                onChangeText={setSurName} />
-            <Spacer />
+                onChangeText={setSurName}
+                onBlur={validator.showMessageFor('surname')}
+                error={validator.message('surname', surname, 'required|max:30')}
+
+            />
             <DynamicTextInput
-                label='Username :'
+                label='Username'
+                maxLength={10}
                 secureTextEntry={false}
                 autoCapitalize='none'
                 autoCorrect={true}
                 placeholder='mobile no'
                 value={username}
-                onChangeText={setUsername} />
-            <Spacer />
+                onChangeText={setUsername}
+                onBlur={validator.showMessageFor('username')}
+                error={validator.message('username', username, 'required|integer|min:3|max:3')}
+            />
             <DynamicTextInput
-                label='Password :'
+                label='Password'
+                maxLength={3}
                 secureTextEntry={true}
                 autoCapitalize='none'
                 autoCorrect={false}
                 placeholder='password'
                 value={password}
-                onChangeText={setPassword} />
-            <Spacer />
+                onChangeText={setPassword}
+                onBlur={validator.showMessageFor('password')}
+                error={validator.message('password', password, 'required|integer|min:3|max:3')}
+            />
+
             <DynamicTextInput
-                label='Email :'
+                label='Email'
+                maxLength={30}
                 secureTextEntry={false}
                 autoCapitalize='none'
-                autoCorrect={false}
+                autoCorrect={true}
                 placeholder='email'
                 value={email}
-                onChangeText={setEmail} />
+                onChangeText={setEmail}
+                onBlur={validator.showMessageFor('email')}
+                error={validator.message('email', email, 'required|email')}
+            />
+
             <Spacer />
             {renderButton()}
-            <Spacer />
-        </>)
+        </>
+        )
 };
 
 

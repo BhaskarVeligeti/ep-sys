@@ -9,10 +9,10 @@ import { NavigationEvents } from 'react-navigation'
 import { Context as RegContext } from '../context/RegContext' // accesing Context
 import RadioButton from '../components/RadioButton'
 import {statusOptions} from '../fixures/fixures.json'
-
+import SimpleReactValidator from 'simple-react-validator';
 
 const RepUpdateForm = ({ navigation, data }) => {
-
+    const validator = new SimpleReactValidator({ locale: 'en' });
     const [firstName, setFirstName] = useState(data.firstName);
     const [surname, setSurName] = useState(data.surname);
     const [email, setEmail] = useState(data.email);
@@ -29,6 +29,7 @@ const RepUpdateForm = ({ navigation, data }) => {
     const { errorStyle, iconStyle } = styles
 
     renderError = () => (errorMessage && !loading) ? (<Text h4 h4Style={errorStyle}>{errorMessage}</Text>) : null
+    buttonDisable = () => (!validator.allValid() && !loading) ? true : false
 
     var input = {
         id: data.id,
@@ -46,44 +47,58 @@ const RepUpdateForm = ({ navigation, data }) => {
                 title={'Update '}
                 onPress={() => updateRep({ input })}
                 raised
-                disabled={loading}
+                disabled={buttonDisable()}
                 buttonStyle={{ borderRadius: 5 }} />
         )
     }
 
     return (
         <>
+        <Loader loading={loading} />
             <NavigationEvents onDidFocus={clearErrorMessage} />
-            <Loader loading={loading} />
             {renderError()}
             <DynamicTextInput
-                label='Firstname :'
-                secureTextEntry={false}
-                autoCapitalize='none'
-                autoCorrect={true}
-                placeholder='firstname'
-                value={firstName}
-                onChangeText={setFirstName} />
-            <Spacer />
-            <DynamicTextInput
-                label='Surname :'
-                secureTextEntry={false}
-                autoCapitalize='none'
-                autoCorrect={true}
-                placeholder='surname'
-                value={surname}
-                onChangeText={setSurName} />
-            <Spacer />
-            <DynamicTextInput
-                label='Email :'
+                label='Firstname'
+                maxLength={30}
                 secureTextEntry={false}
                 autoCapitalize='none'
                 autoCorrect={false}
+                placeholder='firstName'
+                value={firstName}
+                onChangeText={setFirstName}
+                onBlur={validator.showMessageFor('firstName')}
+                error={validator.message('firstName', firstName, 'required|max:30')}
+            />
+             <DynamicTextInput
+                label='Surname'
+                maxLength={30}
+                secureTextEntry={false}
+                autoCapitalize='none'
+                autoCorrect={false}
+                placeholder='surname'
+                value={surname}
+                onChangeText={setSurName}
+                onBlur={validator.showMessageFor('surname')}
+                error={validator.message('surname', surname, 'required|max:30')}
+
+            />
+         <DynamicTextInput
+                label='Email'
+                maxLength={30}
+                secureTextEntry={false}
+                autoCapitalize='none'
+                autoCorrect={true}
                 placeholder='email'
                 value={email}
-                onChangeText={setEmail} />
+                onChangeText={setEmail}
+                onBlur={validator.showMessageFor('email')}
+                error={validator.message('email', email, 'required|email')}
+            />
             <Spacer />
-            <RadioButton options={statusOptions} intialStatus={status} onPress={(status)=>setStatus(status)} />
+            <RadioButton
+                options={statusOptions}
+                intialStatus={status}
+                onPress={(status) => setStatus(status)} />
             {renderButton()}
             <Spacer />
         </>)

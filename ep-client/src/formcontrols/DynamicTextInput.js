@@ -13,10 +13,9 @@ const DynamicTextInput = ({theme,label, autoFocus,autoCapitalize, autoCorrect, v
   return (
     <View>
       <TextInput
-
         mode='outlined'
         label={label}
-        autoFocus={autoFocus}
+        // autoFocus={autoFocus}
         maxLength = {maxLength}
         secureTextEntry={secureTextEntry}
         autoCapitalize={autoCapitalize}

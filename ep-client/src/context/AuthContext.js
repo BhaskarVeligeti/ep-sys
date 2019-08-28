@@ -79,7 +79,7 @@ const tryLocalSignin = dispatch => async () => {
     setTimeout(() => {
       dispatch({ type: 'loader', payload: false });
       // navigate('Home'); // TODO :change it back
-      navigate('TrackAndTrace');
+      navigate('AdminTasks');
     }, 1000);
   } else {
     // step 2: Navigate to Signup

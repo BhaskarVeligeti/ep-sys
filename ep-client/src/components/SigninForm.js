@@ -3,7 +3,7 @@ import Loader from './Loader';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import Spacer from './Spacer'
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign,Feather } from '@expo/vector-icons';
 import DynamicTextInput from '../formcontrols/DynamicTextInput'
 import { NavigationEvents } from 'react-navigation'
 import { Context as AuthContext } from '../context/AuthContext' // accesing Context
@@ -13,7 +13,7 @@ import SimpleReactValidator from 'simple-react-validator';
 /**
     * message(field, inputValue, validations, options = {}) How you define validation rules and add messages into the form.
     */
-const SigninForm = ({ headerText }) => {
+const SigninForm = () => {
     const validator = new SimpleReactValidator({ locale: 'en' });
 
 
@@ -25,7 +25,7 @@ const SigninForm = ({ headerText }) => {
     const { state: { username, password, errorMessage, loading },
         signin, onUsernameChange, onPasswordChange, clearErrorMessage } = useContext(AuthContext);
 
-    const { headerStyle, errorStyle, iconStyle } = styles
+    const { headerStyle,errorStyle, iconStyle } = styles
 
     renderError = () => (errorMessage && !loading) ? (<Text h4 h4Style={errorStyle}>{errorMessage}</Text>) : null
 
@@ -47,14 +47,16 @@ const SigninForm = ({ headerText }) => {
 
     return (
         <>
-            <NavigationEvents onDidFocus={clearErrorMessage} />
-            <Text h4 h4Style={headerStyle}>{headerText}</Text>
             <Loader loading={loading} />
+            <NavigationEvents onDidFocus={clearErrorMessage} />
+            <View style={headerStyle}>
+                <Feather name="unlock" size={50} color="#6f42c1" />
+            </View>
+            <Spacer />
             {renderError()}
-
+            <Spacer />
             <DynamicTextInput
                 label='Username'
-                autoFocus={true}
                 maxLength={3}
                 secureTextEntry={false}
                 autoCapitalize='none'
@@ -99,12 +101,12 @@ const styles = StyleSheet.create({
     spacerStyle: {
         margin: 15,
     },
-    headerStyle: {
-        alignSelf: 'center',
-        marginBottom: 25,
-        fontSize: 20,
-        marginTop: 15
-    },
+    headerStyle:{
+        marginTop:20,alignItems:'center'
+      },
+      headerTextStyle:{
+          fontSize: 18, color: 'white' ,top:8
+      },
     errorStyle: {
         fontSize: 15,
         alignSelf: 'center',

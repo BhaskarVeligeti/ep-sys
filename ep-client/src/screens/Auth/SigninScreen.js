@@ -6,11 +6,11 @@ import SigninForm from '../../components/SigninForm';
 
 /**navigation prop that is passed down to our screen components. */
 
-const SignupScreen = ({ navigation }) => {
+const SigninScreen = ({ navigation }) => {
     const { containerStyle } = styles
     return (
         <View style={containerStyle}>
-            <SigninForm headerText={'Sign In for Engineering Procurement'}/>
+            <SigninForm />
         </View>
     )
 
@@ -18,7 +18,7 @@ const SignupScreen = ({ navigation }) => {
 
 
 
-SignupScreen.navigationOptions={
+SigninScreen.navigationOptions={
     title:'SignIn',
     tabBarColor:'#17a2b8',
     tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default SignupScreen;
+export default SigninScreen;

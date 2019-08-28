@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { View, StyleSheet,Picker } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import SignupForm from '../../components/SignupForm';
 
@@ -8,14 +8,10 @@ import SignupForm from '../../components/SignupForm';
 /**navigation prop that is passed down to our screen components. */
 
 const SignupScreen = ({ navigation }) => {
-
- 
-
-
     const { containerStyle } = styles
     return (
         <View style={containerStyle}>
-            <SignupForm headerText={'Sign Up for Engineering Procurement'}/>
+            <SignupForm/>
         </View>
     )
 
@@ -25,7 +21,7 @@ const SignupScreen = ({ navigation }) => {
 
 SignupScreen.navigationOptions={
     title:'SignUp',
-    tabBarColor:'#6f42c1',
+    tabBarColor:'#20c997',
     tabBarIcon: ({ focused, horizontal, tintColor }) => {
         return<AntDesign name="adduser" size={20}  color={tintColor}/>
     }

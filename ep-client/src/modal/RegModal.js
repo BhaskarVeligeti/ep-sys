@@ -23,6 +23,7 @@ const RegModal = ({ navigation }) => {
       </View>
       <Spacer />
       <RegForm />
+      <Spacer />
       <Button
         onPress={() => navigation.navigate('AddRep')}
         title="Cancel  "
