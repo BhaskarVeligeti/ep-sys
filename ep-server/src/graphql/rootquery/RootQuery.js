@@ -7,7 +7,7 @@ const User_Model = require('../../database/models/user')
 
 // Output.....
 const UserType = require('../output/output_user')
-
+const Output_Product = require('../output/output_product')
 
 // inputs.....
 
@@ -15,6 +15,7 @@ const UserType = require('../output/output_user')
 
 // helpers....
 const findListByName = require('../../database/helpers/findListByName')
+const getProducts = require('../../database/helpers/getProducts')
 
 
 
@@ -24,6 +25,14 @@ const findListByName = require('../../database/helpers/findListByName')
 const RootQuery = new GraphQLObjectType({
 	name: 'RootQuery',
 	fields: () => ({
+
+			/*-----------------------------------------------  Product ------------------------------------------------------------------------*/
+			products: {
+				type: new GraphQLList(Output_Product), // return type 
+				resolve(parentValue, req) {
+					return getProducts();
+				}
+			}, // end of products
 
 	/*-----------------------------------------------  Users ------------------------------------------------------------------------*/
 	users: {

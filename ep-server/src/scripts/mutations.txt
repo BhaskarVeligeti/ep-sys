@@ -184,3 +184,39 @@ Output:
 }
 
 =================================================addOrders==============================================================================================================
+
+mutation addProduct($input: InputAddProductType!){
+	addProduct(input:$input){
+	 id name description sellingPrice image rating reviews
+	}
+  }
+
+{
+  "input": {
+    "name": "product1",
+    "description": "PRODUCT1",
+    "sellingPrice": 125.50,
+    "image":"C:/fakepath/1.jpg"
+    
+  }
+}
+
+{
+  "input": {
+    "name": "product2",
+    "description": "PRODUCT2",
+    "sellingPrice": 125.50,
+    "image":"C:/fakepath/2.jpg"
+    
+  }
+}
+
+
+
+
+
+
+
+
+
+

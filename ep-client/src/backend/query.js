@@ -4,6 +4,11 @@ export const users = `{
     }
   }`
 
+  export const products = `{
+    products{
+      id name description sellingPrice image rating reviews
+    }
+  }`
 
 
 

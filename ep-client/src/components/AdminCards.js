@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity,StyleSheet } from 'react-native';
-import { Text, Card,Divider } from 'react-native-elements';
+import { Text, Card,Image,ActivityIndicator } from 'react-native-elements';
 import { withNavigation } from 'react-navigation'
 import Spacer from './Spacer'
 
@@ -21,11 +21,20 @@ const AdminCards = ({ navigation }) => {
                 }
                 containerStyle={containerStyle}
                     image={require(`../../assets/track.jpg`)}
+                    // PlaceholderContent={<ActivityIndicator />}
+
+                    // image={  <Image
+                    //     source={require('../../assets/track.jpg')}
+                    //     style={imageStyle}
+                    //     PlaceholderContent={<ActivityIndicator />}
+                    // />}
                    
                 >
-                    <Text style={{ marginBottom: 10 }}>
+            <Text style={{ marginBottom: 10 }}>
                         {'Track and Trace Management.'}
                     </Text>
+
+                 
                 </Card>
             </TouchableOpacity>
 
@@ -162,8 +171,8 @@ const styles = StyleSheet.create({
         fontSize:18
     },
     imageStyle:{
-        // flex:1,
-        // width:200,height:150,
+        flex:1,
+        width:200,height:150,
         alignSelf:'center',
         alignContent:'center'
         

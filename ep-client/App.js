@@ -1,5 +1,5 @@
 import React from 'react';
-import {Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider } from 'react-native-paper';
 import {
   createAppContainer,
   createStackNavigator,
@@ -8,13 +8,8 @@ import {
 } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { setNavigator } from './src/navigationRef';
-import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
-// providers declaration :
-import { Provider as AuthProvider } from './src/context/AuthContext'
-import { Provider as UsersProvider } from './src/context/UsersContext'
-import { Provider as RegProvider } from './src/context/RegContext'
-
 import WelcomeScreen from './src/screens/WelcomeScreen';
+import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 // auth :
 import SigninScreen from './src/screens/Auth/SigninScreen';
 import SignupScreen from './src/screens/Auth/SignupScreen';
@@ -49,6 +44,11 @@ import CompleteScreen from './src/screens/TrackAndTrace/CompleteScreen';
 import RefundScreen from './src/screens/TrackAndTrace/RefundScreen';
 import CancelScreen from './src/screens/TrackAndTrace/CancelScreen';
 
+// providers declaration :
+import { Provider as AuthProvider } from './src/context/AuthContext'
+import { Provider as UsersProvider } from './src/context/UsersContext'
+import { Provider as RegProvider } from './src/context/RegContext'
+import { Provider as ProductProvider } from './src/context/ProductContext'
 
 console.disableYellowBox = true;
 
@@ -57,15 +57,15 @@ const AuthFlow = createMaterialBottomTabNavigator({
   Signin: SigninScreen,
   Signup: SignupScreen,
 }, {
-  shifting :true,
+    shifting: true,
 
-});
+  });
 
 const LandingFlow = createStackNavigator(
   {
     Welcome: WelcomeScreen,
-    Auth:AuthFlow
-  },  { // options object 
+    Auth: AuthFlow
+  }, { // options object 
     initialRouteName: "Welcome",
     /* The header config Sharing common navigationOptions across screens */
     defaultNavigationOptions: {
@@ -83,12 +83,13 @@ const LandingFlow = createStackNavigator(
 // ******************************************** home screens flow : *****************************************************
 
 const HomeStack = createStackNavigator(
-  { Home: HomeScreen
-   },
-   { // options object 
+  {
+    Home: HomeScreen
+  },
+  { // options object 
     initialRouteName: "Home",
-     /* The header config Sharing common navigationOptions across screens */
-     defaultNavigationOptions: {
+    /* The header config Sharing common navigationOptions across screens */
+    defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#6f42c1',
       },
@@ -108,9 +109,9 @@ const DashboardFlow = createMaterialBottomTabNavigator({
   Statistics: StatisticsScreen,
 
 }, {
-  shifting :true,
+    shifting: true,
 
-});
+  });
 
 // ******************************************** TrackAndTrace screens flow : *****************************************************
 const TrackAndTraceFlow = createMaterialBottomTabNavigator({
@@ -122,9 +123,9 @@ const TrackAndTraceFlow = createMaterialBottomTabNavigator({
   Refund: RefundScreen
 
 }, {
-  shifting :true,
+    shifting: true,
 
-});
+  });
 
 // ******************************************** Admin screens flow : *****************************************************
 
@@ -133,9 +134,9 @@ const AdminFlow = createMaterialBottomTabNavigator({
   ResetPassword: ResetPasswordScreen
 
 }, {
-  shifting :true,
+    shifting: true,
 
-});
+  });
 
 // ******************************************** landing screens flow : *****************************************************
 
@@ -150,23 +151,23 @@ const switchNavigator = createSwitchNavigator({
   ResolveAuth: ResolveAuthScreen,  // automatic signin process
   landing: LandingFlow,  // welcome and signin and signup
   Home: HomeStack,     // Home 
-  Dashboard:DashboardFlow,  // Dashboard
-  Product:ProductScreen,
-  Reminder:ReminderScreen,
-  ChangePassword:ChangePasswordScreen,
-  OrderHistory:OrderHistoryScreen,
+  Dashboard: DashboardFlow,  // Dashboard
+  Product: ProductScreen,
+  Reminder: ReminderScreen,
+  ChangePassword: ChangePasswordScreen,
+  OrderHistory: OrderHistoryScreen,
   RegModal: RegModal,   // modal
-  RepDetail:RepDetailScreen,
-  RepDetailModal:RepDetailModal, // modal
-  TrackAndTrace:TrackAndTraceFlow,
-  AdminTasks:AdminFlow
+  RepDetail: RepDetailScreen,
+  RepDetailModal: RepDetailModal, // modal
+  TrackAndTrace: TrackAndTraceFlow,
+  AdminTasks: AdminFlow
 },
-{
-  mode: 'modal',
-  headerMode: 'none',
-}, {
-  initialRouteName: 'ResolveAuth'
-})
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  }, {
+    initialRouteName: 'ResolveAuth'
+  })
 
 const AppContainer = createAppContainer(switchNavigator);
 
@@ -178,19 +179,21 @@ It also acts as a portal to components which need to be rendered at the top leve
 export default () => {
   return (
 
-<PaperProvider>
-<RegProvider>
-<UsersProvider>
-  <AuthProvider>
-    <AppContainer
-      ref={(navigator) => { //Navigation From Outside of React
-        setNavigator(navigator);
-      }} />
+    <PaperProvider>
+      <ProductProvider>
+        <RegProvider>
+          <UsersProvider>
+            <AuthProvider>
+              <AppContainer
+                ref={(navigator) => { //Navigation From Outside of React
+                  setNavigator(navigator);
+                }} />
 
-  </AuthProvider>
-</UsersProvider>
-</RegProvider>
-</PaperProvider>
+            </AuthProvider>
+          </UsersProvider>
+        </RegProvider>
+      </ProductProvider>
+    </PaperProvider>
 
   )
 }

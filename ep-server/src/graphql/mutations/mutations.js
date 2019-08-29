@@ -8,24 +8,37 @@ const { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLNonNull, GraphQLFl
 // Output.....
 const Output_List = require('../output/output_list')
 const Output_User = require('../output/output_user')
+const Output_Product = require('../output/output_product')
 
 // Input.....
 const Input_List = require('../input/input_list')
 const Input_Create_User = require('../input/input_create_user')
 const Input_Update_Rep = require('../input/input_update_rep')
+const Input_Add_Product = require('../input/input_add_product')
 
 // helpers....
 const saveList = require('../../database/helpers/saveList')
 const saveUser = require('../../database/helpers/saveUser')
 const saveAdmin = require('../../database/helpers/saveAdmin')
 const updateRepById = require('../../database/helpers/updateRepById')
-
+const addProduct = require('../../database/helpers/addProduct')
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
 
-    /*-----------------------------------------------------add -------------------------------------------------------------------*/
+/*---------------------------------------------------***  add product ---------------------------------------------------------------*/
+addProduct: {
+  type: Output_Product,
+  args: {
+    input: {
+    type: new GraphQLNonNull(Input_Add_Product)
+    }
+  },
+  resolve(parentValue, { input }, req) {
+    return addProduct(input)
+  }
+  }, // end of addProduct 
 
 
     /*-----------------------------------------------------add -------------------------------------------------------------------*/

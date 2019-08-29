@@ -78,12 +78,14 @@ const tryLocalSignin = dispatch => async () => {
     
     setTimeout(() => {
       dispatch({ type: 'loader', payload: false });
+     
       // navigate('Home'); // TODO :change it back
-      navigate('AdminTasks');
+      navigate('Product');
     }, 1000);
   } else {
     // step 2: Navigate to Signup
     navigate('Auth');
+    // navigate('Welcome'); // TODO :change it back
   }
 };
 

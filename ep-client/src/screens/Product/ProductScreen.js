@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View,Dimensions,FlatList,TouchableOpacity } from 'react-native';
-import { Text, ListItem,Divider } from 'react-native-elements';
+import { StyleSheet, View,Dimensions,FlatList,TouchableOpacity,ActivityIndicator } from 'react-native';
+import { Text, ListItem,Divider,Image } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
-import { Context as UsersContext } from '../../context/UsersContext';
+import { Context as ProductContext } from '../../context/ProductContext';
 import { NavigationEvents } from 'react-navigation';
 import Loader from '../../components/Loader';
 import TabHeader from '../../components/TabHeader'
@@ -13,10 +13,10 @@ const {width,height} = Dimensions.get('window');
 
 const ProductScreen = ({ navigation }) => {
       /* access Provider in the Context from this component
-      fetchUsers: action funtion
+      fetchProduct: action funtion
       */
-    const { state: { users, loading }, fetchUsers } = useContext(UsersContext);
-    const { containerStyle, contentStyle,subtitleView,subtitleText } = styles
+    const { state: { products, loading }, fetchProduct } = useContext(ProductContext);
+    const { containerStyle,subtitleView,subtitleText } = styles
 
     renderItem = ({ item }) => {
         // console.log('renderItem :', item);
@@ -25,12 +25,16 @@ const ProductScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('RepDetailModal', { item: item })}>
                     <ListItem
                         leftIcon={<AntDesign name="user" size={20} />}
-                        title={item.username}
+                        title={item.name}
                         titleStyle={{ color: titleColor }}
                         subtitle={
                             <View style={subtitleView}>
-                                <Text style={subtitleText}>{item.firstName + " " + item.surname}</Text>
-                                <Text style={{ color: titleColor, paddingLeft: 10, }}>{item.status}</Text>
+                                <Text style={subtitleText}>{item.description }</Text>
+                                <Image 
+                                source={{uri: `data:image/png;base64,${item.image}`}} 
+                                PlaceholderContent={<ActivityIndicator />}
+                                style={{width: 150, height: 100}}
+                                />
                             </View>
                         }
                         chevron
@@ -42,11 +46,11 @@ const ProductScreen = ({ navigation }) => {
     return (
         <>
         <Loader loading={loading} />
-        <NavigationEvents onWillFocus={fetchUsers} />
+        <NavigationEvents onWillFocus={fetchProduct} />
         <View style={containerStyle}>
             <TabHeader isButton={true} icon="pluscircleo" navigateTo='RegModal' />
             <FlatList
-                data={users}
+                data={products}
                 keyExtractor={item => item.id}
                 renderItem={renderItem}
             />

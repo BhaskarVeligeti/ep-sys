@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const requireAuth = require('./middlewares/requireAuth')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
-// const cors = require('cors')
 const authRoutes = require('./routes/authRoutes')
 
 /*
@@ -15,7 +14,7 @@ it is Express API
 */
 // step 1:Creates an Express application.
 const app = express();
-// app.use(cors());
+
 
 // step 2: teach to express about json body
 app.use(bodyParser.json())
@@ -41,7 +40,7 @@ step 5: if any request comes into our express looking for the route /graphql
 then we want the graphql library to handle it.
 */
 app.use('/graphql',
-// requireAuth,
+requireAuth,
   graphqlHTTP({
     schema,
     graphiql:true
