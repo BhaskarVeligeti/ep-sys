@@ -6,6 +6,7 @@ import { Context as ProductContext } from '../../context/ProductContext';
 import { NavigationEvents } from 'react-navigation';
 import Loader from '../../components/Loader';
 import TabHeader from '../../components/TabHeader'
+import SearchBar from '../../components/SearchBar'
 
 const {width,height} = Dimensions.get('window');
 
@@ -24,17 +25,19 @@ const ProductScreen = ({ navigation }) => {
         return (<TouchableOpacity
             onPress={() => navigation.navigate('RepDetailModal', { item: item })}>
                     <ListItem
-                        leftIcon={<AntDesign name="user" size={20} />}
-                        title={item.name}
+                        leftIcon={  <Image 
+                            source={{uri: `data:image/png;base64,${item.image}`}} 
+                            PlaceholderContent={<ActivityIndicator />}
+                            style={{width: 150, height: 100}}
+                            />}
+                        title={'Rs '+item.sellingPrice}
                         titleStyle={{ color: titleColor }}
                         subtitle={
                             <View style={subtitleView}>
-                                <Text style={subtitleText}>{item.description }</Text>
-                                <Image 
-                                source={{uri: `data:image/png;base64,${item.image}`}} 
-                                PlaceholderContent={<ActivityIndicator />}
-                                style={{width: 150, height: 100}}
-                                />
+                                <Text style={subtitleText}>{item.name}</Text>
+                                <Text style={subtitleText}>{item.description}</Text>
+                                <Text style={subtitleText}>rating : {item.rating}</Text>
+                                <Text style={subtitleText}>reviews : {item.reviews}</Text>
                             </View>
                         }
                         chevron
@@ -49,6 +52,11 @@ const ProductScreen = ({ navigation }) => {
         <NavigationEvents onWillFocus={fetchProduct} />
         <View style={containerStyle}>
             <TabHeader isButton={true} icon="pluscircleo" navigateTo='RegModal' />
+            <SearchBar
+                term={''}
+                onTermChange={(newTerm) => {}}
+                onTermSubmit={() => {}}
+            ></SearchBar>
             <FlatList
                 data={products}
                 keyExtractor={item => item.id}
@@ -76,7 +84,7 @@ const styles = StyleSheet.create({
     
     },
     subtitleView: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         paddingLeft: 10,
         paddingTop: 5
       },

@@ -40,7 +40,7 @@ step 5: if any request comes into our express looking for the route /graphql
 then we want the graphql library to handle it.
 */
 app.use('/graphql',
-requireAuth,
+// requireAuth,
   graphqlHTTP({
     schema,
     graphiql:true
