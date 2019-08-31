@@ -1,12 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { ScrollView, RefreshControl, StyleSheet, View, Dimensions, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Text, ListItem, Divider, Image } from 'react-native-elements';
+import { Text, ListItem, Divider, Image, Button } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Context as ProductContext } from '../../context/ProductContext';
 import { NavigationEvents } from 'react-navigation';
 import Loader from '../../components/Loader';
 import TabHeader from '../../components/TabHeader'
 import SearchBar from '../../components/SearchBar'
+import { AntDesign } from '@expo/vector-icons';
 
 
 const { width, height } = Dimensions.get('window');
@@ -19,37 +20,79 @@ const PurchaseScreen = ({ navigation }) => {
     fetchProduct: action funtion
     */
     const { state: { products, loading }, fetchProduct } = useContext(ProductContext);
-    const { containerStyle, subtitleView, subtitleText, nameStyle, priceStyle, productTextView, ratingView, imageView, descriptionText, dividerStyle } = styles
+    const { containerStyle, subtitleView, subtitleText, nameStyle, priceStyle,
+        productTextView, ratingView, imageView, descriptionText, dividerStyle, buttonView, iconStyle, buttonStyle,titleStyle } = styles
+
+
+    renderBuyNowButton = () => {
+        return (
+            <Button
+                type="outline"
+                // icon={<AntDesign name="checkcircleo" style={iconStyle} />}
+                iconRight
+                title={'Buy Now'}
+                titleStyle={titleStyle}
+                onPress={() => { }}
+                raised
+                buttonStyle={buttonStyle}
+            />
+        )
+    }
+
+    renderAddCartButton = () => {
+        return (
+            <Button
+                type="outline"
+                // icon={<AntDesign name="shoppingcart" style={iconStyle} />}
+                iconRight
+                title={'Add to Cart'}
+                titleStyle={titleStyle}
+                onPress={() => { }}
+                raised
+                buttonStyle={buttonStyle} />
+        )
+    }
+
+
 
     renderItem = ({ item }) => {
         // console.log('renderItem :', item);
-        return (<TouchableOpacity
-            onPress={() => alert(`selected :${item.name}`)}>
-            <View style={productTextView}>
-                <Text style={nameStyle}>{item.name}</Text>
-                <MaterialCommunityIcons name="currency-inr" size={20} style={priceStyle}>
-                    <Text >{item.sellingPrice}</Text>
-                </MaterialCommunityIcons>
+        return (
+            // <TouchableOpacity
+            //     onPress={() => alert(`selected :${item.name}`)}>
+            <>
+                <View style={productTextView}>
+                    <Text style={nameStyle}>{item.name}</Text>
+                    <MaterialCommunityIcons name="currency-inr" size={20} style={priceStyle}>
+                        <Text >{item.sellingPrice}</Text>
+                    </MaterialCommunityIcons>
 
-            </View>
-            <View style={imageView}>
-                <ListItem
-                    leftIcon={<Image
-                        source={{ uri: `data:image/png;base64,${item.image}` }}
-                        PlaceholderContent={<ActivityIndicator />}
-                        style={{ width: 150, height: 100 }}
-                    />}
-                >
+                </View>
+                <View style={imageView}>
+                    <ListItem
+                        leftIcon={<Image
+                            source={{ uri: `data:image/png;base64,${item.image}` }}
+                            PlaceholderContent={<ActivityIndicator />}
+                            style={{ width: 150, height: 100 }}
+                        />}
+                    >
 
-                </ListItem>
-                <Text style={descriptionText}>{item.description}</Text>
-            </View>
-            <View style={ratingView}>
-                <Text style={subtitleText}>rating : {item.rating}</Text>
-                <Text style={subtitleText}>reviews : {item.reviews}</Text>
-            </View>
-            <Divider style={dividerStyle} />
-        </TouchableOpacity>)
+                    </ListItem>
+                    <Text style={descriptionText}>{item.description}</Text>
+                </View>
+                <View style={ratingView}>
+                    <Text style={subtitleText}>rating : {item.rating}</Text>
+                    <Text style={subtitleText}>reviews : {item.reviews}</Text>
+                </View>
+                <View style={buttonView}>
+                    {renderBuyNowButton()}
+                    {renderAddCartButton()}
+                </View>
+
+                <Divider style={dividerStyle} />
+            </>
+            // </TouchableOpacity>
+        )
     }
 
 
@@ -58,9 +101,11 @@ const PurchaseScreen = ({ navigation }) => {
         fetchProduct();
         setTimeout(() => {
             setRefreshing(false);
-          }, 3000);
-       
+        }, 3000);
+
     }
+
+
 
 
     return (
@@ -80,7 +125,7 @@ const PurchaseScreen = ({ navigation }) => {
                             <RefreshControl
                                 refreshing={refreshing} //Whether the view should be indicating an active refresh.
                                 onRefresh={() => _onRefresh()} // Called when the view starts refreshing.
-                                colors={["#6f42c1", "#007bff", "#dc3545","#28a745","#007bff","#17a2b8"]}
+                                colors={["#6f42c1", "#007bff", "#dc3545", "#28a745", "#007bff", "#17a2b8"]}
                             />
                         }
                     >
@@ -120,8 +165,8 @@ const styles = StyleSheet.create({
 
     },
     nameStyle: {
-        fontSize: 18,
-        color: '#17a2b8',
+        fontSize: 15,
+        color: '#6f42c1',
         marginLeft: 15
     },
     priceStyle: {
@@ -159,6 +204,25 @@ const styles = StyleSheet.create({
     subtitleText: {
         paddingLeft: 10,
         color: 'grey'
+    },
+    buttonView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 10
+    },
+
+    iconStyle: {
+        fontSize: 22,
+        color: '#6f42c1'
+    },
+    buttonStyle: {
+        borderRadius: 5,
+        borderColor: '#6f42c1'
+     
+    },
+    titleStyle:{
+        fontSize: 13,
+        color: '#6f42c1'
     },
     dividerStyle: {
         backgroundColor: '#6f42c1'
