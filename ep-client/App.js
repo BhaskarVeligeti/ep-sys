@@ -21,6 +21,7 @@ import ProcurementScreen from './src/screens/Dashbord/ProcurementScreen';
 import StatisticsScreen from './src/screens/Dashbord/StatisticsScreen';
 // product :
 import ProductScreen from './src/screens/Product/ProductScreen';
+import PurchaseScreen from './src/screens/Product/PurchaseScreen';
 // reminder :
 import ReminderScreen from './src/screens/Reminder/ReminderScreen';
 // password :
@@ -153,6 +154,7 @@ const switchNavigator = createSwitchNavigator({
   Home: HomeStack,     // Home 
   Dashboard: DashboardFlow,  // Dashboard
   Product: ProductScreen,
+  Purchase:PurchaseScreen,
   Reminder: ReminderScreen,
   ChangePassword: ChangePasswordScreen,
   OrderHistory: OrderHistoryScreen,

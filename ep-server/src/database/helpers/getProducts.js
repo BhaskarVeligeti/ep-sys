@@ -2,7 +2,7 @@
 const Product_Model = require('../models/product')
 
 module.exports = (args) => {
-	return Product_Model.find({}).then((d)=>{
+	return Product_Model.find({}).limit(4).then((d)=>{
 
 		let products = []
 		let product = {}

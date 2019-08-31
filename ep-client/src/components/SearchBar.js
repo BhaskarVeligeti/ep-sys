@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0EEEE',
         height: 50,
         borderRadius: 30,
-        marginHorizontal: 5,
+        marginHorizontal: 2,
         flexDirection: 'row',
         marginBottom:10
     },
@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     iconStyle: {
-        fontSize: 30,
+        fontSize: 25,
+        color:'#6f42c1',
         alignSelf: 'center',
         marginHorizontal: 15,
     },

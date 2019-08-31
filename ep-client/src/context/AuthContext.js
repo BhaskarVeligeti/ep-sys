@@ -80,7 +80,7 @@ const tryLocalSignin = dispatch => async () => {
       dispatch({ type: 'loader', payload: false });
      
       // navigate('Home'); // TODO :change it back
-      navigate('Product');
+      navigate('Purchase');
     }, 1000);
   } else {
     // step 2: Navigate to Signup

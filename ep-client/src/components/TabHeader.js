@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button,withBadge } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation'
 import { Context as AuthContext } from '../context/AuthContext' // accesing Context
 
-const TabHeader = ({ isButton, icon, navigateTo, navigation }) => {
+const TabHeader = ({ isButton,isCartButton, isSignoutButton,icon, value,navigateTo, navigation }) => {
 
     const { signout } = useContext(AuthContext);
     const { headerStyle } = styles
@@ -38,11 +38,25 @@ const TabHeader = ({ isButton, icon, navigateTo, navigation }) => {
         )
     }
 
+    // add badge to icon in  react-native
+const POBadge = withBadge(value, {containerStyle:{position: 'absolute', top:8, right:35 }})(AntDesign)
+
+    renderCartButton = () => {
+        return (
+            <TouchableOpacity onPress={() => navigation.navigate(navigateTo)}>
+                <POBadge name={icon} size={30} color="white" style={{ marginTop: 5, marginRight: 15 }} />
+            </TouchableOpacity>
+
+        )
+    }
+
+
 
     return (<View style={headerStyle}>
         {renderHomeButton()}
         {isButton === true ? renderAddButton() : null}
-        {renderSignoutButton()}
+        {isCartButton === true ? renderCartButton() : null}
+        {isSignoutButton === true ? renderSignoutButton() : null}
     </View>)
 
 }

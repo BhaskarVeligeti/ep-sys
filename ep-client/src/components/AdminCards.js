@@ -11,7 +11,29 @@ const AdminCards = ({ navigation }) => {
     return (
         <>
         <ScrollView>
+        <TouchableOpacity onPress={() => navigation.navigate('Purchase')}>
+            
+            <Card
+                key={9}
+                title={
+               <View style={viewStyle}>
+                <Text style={textStyle}>{'Purchase'}</Text>
+                </View>
+            }
+            containerStyle={containerStyle}
+                image={require(`../../assets/cart.png`)}
+            >
+        <Text style={{ marginBottom: 10 }}>
+                    {'..........Purchase.............'}
+                </Text>
+
+             
+            </Card>
+        </TouchableOpacity>
+
+
         <TouchableOpacity onPress={() => navigation.navigate('TrackAndTrace')}>
+            
                 <Card
                     key={1}
                     title={
