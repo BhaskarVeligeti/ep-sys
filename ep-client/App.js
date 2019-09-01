@@ -22,6 +22,8 @@ import StatisticsScreen from './src/screens/Dashbord/StatisticsScreen';
 // product :
 import ProductScreen from './src/screens/Product/ProductScreen';
 import PurchaseScreen from './src/screens/Product/PurchaseScreen';
+import SelectedItemScreen from './src/screens/Product/SelectedItemScreen';
+
 // reminder :
 import ReminderScreen from './src/screens/Reminder/ReminderScreen';
 // password :
@@ -32,6 +34,10 @@ import OrderHistoryScreen from './src/screens/OrderHistory/OrderHistoryScreen';
 import RegModal from './src/modal/RegModal';
 import RepScreen from './src/screens/RepScreen';
 import RepDetailScreen from './src/screens/RepDetailScreen';
+import AddQuantity from './src/modal/AddQuantity';
+
+
+
 // admin :
 import AddRepScreen from './src/screens/Admin/AddRepScreen';
 import ResetPasswordScreen from './src/screens/Admin/ResetPasswordScreen';
@@ -51,7 +57,18 @@ import { Provider as UsersProvider } from './src/context/UsersContext'
 import { Provider as RegProvider } from './src/context/RegContext'
 import { Provider as ProductProvider } from './src/context/ProductContext'
 
+import { Feather } from '@expo/vector-icons';
+
 console.disableYellowBox = true;
+
+import * as Font from 'expo-font';
+// import { StyleSheet } from 'react-native';
+// StyleSheet.setStyleAttributePreprocessor('fontFamily', Font.processFontFamily);
+
+Font.loadAsync({
+  'OpenSans-Regular': require('./assets/fonts/OpenSans-Regular.ttf'),
+  'OpenSans-SemiBold': require('./assets/fonts/OpenSans-SemiBold.ttf'),
+});
 
 // ******************************************** landing screens flow : *****************************************************
 const AuthFlow = createMaterialBottomTabNavigator({
@@ -59,15 +76,17 @@ const AuthFlow = createMaterialBottomTabNavigator({
   Signup: SignupScreen,
 }, {
     shifting: true,
+  },
+  );
 
-  });
-
+ 
 const LandingFlow = createStackNavigator(
   {
     Welcome: WelcomeScreen,
     Auth: AuthFlow
   }, { // options object 
     initialRouteName: "Welcome",
+   
     /* The header config Sharing common navigationOptions across screens */
     defaultNavigationOptions: {
       headerStyle: {
@@ -78,14 +97,26 @@ const LandingFlow = createStackNavigator(
         fontWeight: 'bold',
       },
     },
-  }
+  },
+//   {
+//  navigationOptions:{
+//     headerRight: (
+//       <Feather name="unlock" size={50} color="white" style={{ marginLeft: 25 }}/>
+//   ),
+//   },
+//   }
 )
 
 // ******************************************** home screens flow : *****************************************************
 
+
+
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen
+    Home: HomeScreen,
+    Purchase:PurchaseScreen,
+    AddQuantity:AddQuantity,   // modal
+    SelectedItem: SelectedItemScreen,
   },
   { // options object 
     initialRouteName: "Home",
@@ -139,9 +170,7 @@ const AdminFlow = createMaterialBottomTabNavigator({
 
   });
 
-// ******************************************** landing screens flow : *****************************************************
-
-
+// ******************************************** selected product screens flow : *****************************************************
 
 
 
@@ -154,7 +183,6 @@ const switchNavigator = createSwitchNavigator({
   Home: HomeStack,     // Home 
   Dashboard: DashboardFlow,  // Dashboard
   Product: ProductScreen,
-  Purchase:PurchaseScreen,
   Reminder: ReminderScreen,
   ChangePassword: ChangePasswordScreen,
   OrderHistory: OrderHistoryScreen,
@@ -162,12 +190,41 @@ const switchNavigator = createSwitchNavigator({
   RepDetail: RepDetailScreen,
   RepDetailModal: RepDetailModal, // modal
   TrackAndTrace: TrackAndTraceFlow,
-  AdminTasks: AdminFlow
+  AdminTasks: AdminFlow,
+
 },
   {
-    mode: 'modal',
     headerMode: 'none',
-  }, {
+    mode: 'modal',
+    defaultNavigationOptions: {
+      gesturesEnabled: false,
+    },
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 300,
+        easing: Easing.out(Easing.poly(4)),
+        timing: Animated.timing,
+      },
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps;
+        const { index } = scene;
+
+        const height = layout.initHeight;
+        const translateY = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [height, 0, 0],
+        });
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index - 0.99, index],
+          outputRange: [0, 1, 1],
+        });
+
+        return { opacity, transform: [{ translateY }] };
+      },
+    }),
+  },
+   {
     initialRouteName: 'ResolveAuth'
   })
 

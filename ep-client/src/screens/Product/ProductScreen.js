@@ -22,7 +22,8 @@ const ProductScreen = ({ navigation }) => {
     renderItem = ({ item }) => {
         // console.log('renderItem :', item);
         return (<TouchableOpacity
-            onPress={() => navigation.navigate('RepDetailModal', { item: item })}>
+            onPress={() => navigation.navigate('RepDetailModal', { item: item })}
+            >
             <View style={productTextView}>
                 <Text style={nameStyle}>{item.name}</Text>
                 <MaterialCommunityIcons name="currency-inr" size={20} style={priceStyle}>

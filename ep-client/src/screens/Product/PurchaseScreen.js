@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { ScrollView, RefreshControl, StyleSheet, View, Dimensions, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Text, ListItem, Divider, Image, Button } from 'react-native-elements';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Text, ListItem, Divider, Image, Button, withBadge } from 'react-native-elements';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Context as ProductContext } from '../../context/ProductContext';
 import { NavigationEvents } from 'react-navigation';
 import Loader from '../../components/Loader';
+import AddQuantity from '../../modal/AddQuantity';
+
 import TabHeader from '../../components/TabHeader'
 import SearchBar from '../../components/SearchBar'
-import { AntDesign } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 const { width, height } = Dimensions.get('window');
@@ -15,39 +17,65 @@ const { width, height } = Dimensions.get('window');
 
 const PurchaseScreen = ({ navigation }) => {
 
-    const [refreshing, setRefreshing] = useState(false)
+    const [refreshing, setRefreshing] = useState(false);
     /* access Provider in the Context from this component
     fetchProduct: action funtion
     */
     const { state: { products, loading }, fetchProduct } = useContext(ProductContext);
-    const { containerStyle, subtitleView, subtitleText, nameStyle, priceStyle,
-        productTextView, ratingView, imageView, descriptionText, dividerStyle, buttonView, iconStyle, buttonStyle,titleStyle } = styles
+    const { containerStyle1,subtitleText, nameStyle, priceStyle,
+        productTextView, ratingView, imageView, descriptionText, dividerStyle,
+        buttonView, button1Style, buttonStyle, titleStyle, button1TextStyle } = styles
 
 
-    renderBuyNowButton = () => {
+    // for TouchableOpacity
+    renderBuyNowButton = (item) => {
+        return (
+            <TouchableOpacity onPress={() => navigation.navigate('AddQuantity',{data:[item]})}>
+                <LinearGradient
+                    colors={['#a94bb9', '#9b46b7', '#8d42b5', '#7d3eb2', '#6d3ab0']}
+                    // start={{ x: 0, y: 0.5 }}
+                    // end={{ x: 1, y: 0.5 }}
+                    style={button1Style}
+                >
+                    <Text style={button1TextStyle}>
+                        Buy Now
+              </Text>
+                </LinearGradient>
+            </TouchableOpacity>
+        )
+    }
+
+
+    // for button 
+    renderBuyNowButton1 = (item) => {
         return (
             <Button
+                ViewComponent={LinearGradient}
+                linearGradientProps={{
+                    // colors: ['rgba(214,116,112,1)', 'rgba(233,174,87,1)'],
+                    colors: ['#a94bb9', '#9b46b7', '#8d42b5', '#7d3eb2', '#6d3ab0'],
+                    start: { x: 0, y: 0.5 },
+                    end: { x: 1, y: 0.5 },
+                }}
                 type="outline"
-                // icon={<AntDesign name="checkcircleo" style={iconStyle} />}
                 iconRight
                 title={'Buy Now'}
-                titleStyle={titleStyle}
-                onPress={() => { }}
+                titleStyle={{ fontSize: 13, color: '#fff' }}
+                onPress={() => console.log('clicked :', item.name)}
                 raised
                 buttonStyle={buttonStyle}
             />
         )
     }
 
-    renderAddCartButton = () => {
+    renderAddCartButton = (item) => {
         return (
             <Button
                 type="outline"
-                // icon={<AntDesign name="shoppingcart" style={iconStyle} />}
                 iconRight
                 title={'Add to Cart'}
                 titleStyle={titleStyle}
-                onPress={() => { }}
+                onPress={() => console.log('clicked :', item.name)}
                 raised
                 buttonStyle={buttonStyle} />
         )
@@ -85,8 +113,8 @@ const PurchaseScreen = ({ navigation }) => {
                     <Text style={subtitleText}>reviews : {item.reviews}</Text>
                 </View>
                 <View style={buttonView}>
-                    {renderBuyNowButton()}
-                    {renderAddCartButton()}
+                    {renderBuyNowButton(item)}
+                    {renderAddCartButton(item)}
                 </View>
 
                 <Divider style={dividerStyle} />
@@ -105,15 +133,17 @@ const PurchaseScreen = ({ navigation }) => {
 
     }
 
-
+    cartCounter = () => {
+        return 99
+    }
 
 
     return (
         <>
             <Loader loading={loading} />
             <NavigationEvents onWillFocus={fetchProduct} />
-            <View style={containerStyle}>
-                <TabHeader isCartButton={true} icon="shoppingcart" value={100} navigateTo='SelectedItemScreen' />
+            <View style={containerStyle1}>
+                {/* <TabHeader isCartButton={true} icon="shoppingcart" value={100} navigateTo='SelectedItem' /> */}
                 <SearchBar
                     term={''}
                     onTermChange={(newTerm) => { }}
@@ -142,9 +172,27 @@ const PurchaseScreen = ({ navigation }) => {
 
 }
 
+// add badge to icon in  react-native
+const POBadge = withBadge(() => cartCounter(), { containerStyle: { top:1, right: 20 } })(AntDesign)
+
+PurchaseScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerTitle: 'Home',
+        headerLeft: (
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <AntDesign name="back" size={25} color="white" style={{ marginLeft: 25 }} />
+        </TouchableOpacity>
+        ),
+        headerRight: (
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                <POBadge name='shoppingcart' size={30} color="white" style={{ marginTop: 5, marginRight: 10 }} />
+            </TouchableOpacity>
+        ),
+    };
+}
 
 const styles = StyleSheet.create({
-    containerStyle: {
+    containerStyle1: {
         // borderColor: '#6610f2',
         // borderWidth: 1,
         flex: 1,
@@ -165,8 +213,8 @@ const styles = StyleSheet.create({
 
     },
     nameStyle: {
-        fontSize: 15,
-        color: '#6f42c1',
+        fontSize: 16,
+        color: '#007bff',
         marginLeft: 15
     },
     priceStyle: {
@@ -215,12 +263,30 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: '#6f42c1'
     },
+    button1Style: {
+        borderRadius: 5,
+        borderColor: '#6f42c1',
+        width: width / 3,
+        height: 37,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+
+    },
+    button1TextStyle: {
+        fontSize: 13,
+        color: '#fff',
+        fontFamily: 'OpenSans-SemiBold',
+
+    },
     buttonStyle: {
         borderRadius: 5,
-        borderColor: '#6f42c1'
-     
+        borderColor: '#6f42c1',
+        width: width / 3,
+
     },
-    titleStyle:{
+    titleStyle: {
         fontSize: 13,
         color: '#6f42c1'
     },
