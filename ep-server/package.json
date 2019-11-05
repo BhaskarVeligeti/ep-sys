@@ -23,7 +23,7 @@
     "graphql-date": "^1.0.3",
     "graphql-upload": "^8.0.7",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.6.9",
+    "mongoose": "^5.7.5",
     "mongoose-float": "^1.0.4",
     "nodemon": "^1.19.1"
   }
